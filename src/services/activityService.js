@@ -3,6 +3,7 @@ import apiClient from '../api/apiClient'
 export const activityService = {
   getActivities: async (params, signal) => (await apiClient.get('/activities', { params, signal })).data,
   getFeatured: async (signal) => (await apiClient.get('/activities/featured', { signal })).data,
+  getActivity: async (slug, signal) => (await apiClient.get(`/activities/${encodeURIComponent(slug)}`, { signal })).data,
 }
 
 export const activityPayload = (response) => response?.data ?? response ?? {}
