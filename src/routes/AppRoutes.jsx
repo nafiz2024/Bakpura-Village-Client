@@ -4,9 +4,10 @@ import ScrollToTop from '../components/common/ScrollToTop'
 import AdminLayout from '../layouts/AdminLayout'
 import PublicLayout from '../layouts/PublicLayout'
 import NotFoundPage from '../pages/NotFoundPage'
+import HomePage from '../pages/public/HomePage'
 
 const publicRoutes = [
-  ['', 'HOME — Coming in Client Step 02'], ['about', 'আমাদের সম্পর্কে'], ['activities', 'কার্যক্রম'],
+  ['about', 'আমাদের সম্পর্কে'], ['activities', 'কার্যক্রম'],
   ['activities/:slug', 'কার্যক্রমের বিস্তারিত'], ['committee', 'কমিটি'], ['news', 'সংবাদ ও নোটিশ'],
   ['news/:slug', 'সংবাদ/নোটিশের বিস্তারিত'], ['gallery', 'গ্যালারি'], ['membership', 'সদস্য হোন'],
   ['donation', 'সহযোগিতা করুন'], ['contact', 'যোগাযোগ'], ['privacy-policy', 'Privacy Policy'],
@@ -19,5 +20,5 @@ const adminRoutes = [
 ]
 
 export default function AppRoutes() {
-  return <><ScrollToTop/><Routes><Route element={<PublicLayout/>}>{publicRoutes.map(([path, title]) => <Route key={path} index={path === ''} path={path || undefined} element={<PagePlaceholder title={title}/>}/>)}</Route><Route path="/admin/login" element={<PagePlaceholder title="Admin Login — পরবর্তী ধাপে তৈরি হবে"/>}/><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/>{adminRoutes.map(([path, title]) => <Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route><Route path="*" element={<NotFoundPage/>}/></Routes></>
+  return <><ScrollToTop/><Routes><Route element={<PublicLayout/>}><Route index element={<HomePage/>}/>{publicRoutes.map(([path, title]) => <Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route><Route path="/admin/login" element={<PagePlaceholder title="Admin Login — পরবর্তী ধাপে তৈরি হবে"/>}/><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/>{adminRoutes.map(([path, title]) => <Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route><Route path="*" element={<NotFoundPage/>}/></Routes></>
 }

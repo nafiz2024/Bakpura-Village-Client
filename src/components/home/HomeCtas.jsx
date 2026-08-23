@@ -1,0 +1,5 @@
+import { ArrowRight, HeartHandshake, UserPlus } from 'lucide-react'
+import { Link } from 'react-router-dom'
+
+export function MembershipCTA({ value }) { const enabled = value?.applicationsEnabled !== false; return <section className="home-section"><div className="container"><div className="membership-cta"><span><UserPlus/></span><div><h2>আমাদের সাথে যুক্ত হোন</h2><p>{enabled ? 'সংগঠনের মানবিক ও সামাজিক উদ্যোগে অংশ নিতে সদস্য হিসেবে যুক্ত হোন।' : 'সদস্যপদ আবেদন বর্তমানে গ্রহণ করা হচ্ছে না।'}</p></div>{enabled && <Link className="button button--primary home-button" to="/membership">সদস্য হোন <ArrowRight size={18}/></Link>}</div></div></section> }
+export function DonationCTA({ value }) { if (value?.enabled === false) return null; return <section className="donation-cta"><div className="container"><HeartHandshake/><div><h2>মানবতার সেবায় সহযোগিতা করুন</h2><p>মানবিক ও সামাজিক উদ্যোগে আপনার সহযোগিতা কল্যাণের প্রচেষ্টাকে এগিয়ে নিতে পারে।</p></div><Link className="button button--gold home-button" to="/donation">সহযোগিতা করুন</Link></div></section> }
