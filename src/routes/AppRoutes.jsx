@@ -12,11 +12,12 @@ import NewsPage from '../pages/public/NewsPage'
 import GalleryPage from '../pages/public/GalleryPage'
 import MembershipPage from '../pages/public/MembershipPage'
 import DonationPage from '../pages/public/DonationPage'
+import ContactPage from '../pages/public/ContactPage'
 
 const publicRoutes = [
   ['activities/:slug', 'কার্যক্রমের বিস্তারিত'],
   ['news/:slug', 'সংবাদ/নোটিশের বিস্তারিত'],
-  ['contact', 'যোগাযোগ'], ['privacy-policy', 'Privacy Policy'],
+  ['privacy-policy', 'Privacy Policy'],
 ]
 const adminRoutes = [
   ['dashboard', 'অ্যাডমিন ড্যাশবোর্ড'], ['members', 'সকল সদস্য'], ['members/inactive', 'নিষ্ক্রিয় সদস্য'],
@@ -28,7 +29,7 @@ const adminRoutes = [
 export default function AppRoutes() {
   return <><ScrollToTop/><Routes>
     <Route element={<PublicLayout/>}>
-      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/>
+      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/><Route path="contact" element={<ContactPage/>}/>
       {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
     </Route>
     <Route path="/admin/login" element={<PagePlaceholder title="Admin Login — পরবর্তী ধাপে তৈরি হবে"/>}/>
