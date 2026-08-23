@@ -17,6 +17,7 @@ import AdminLoginPage from '../pages/public/AdminLoginPage'
 import ProtectedAdminRoute from '../components/auth/ProtectedAdminRoute'
 import DashboardPage from '../pages/admin/DashboardPage'
 import MembersPage from '../pages/admin/MembersPage'
+import MemberDetailsPage from '../pages/admin/MemberDetailsPage'
 
 const publicRoutes = [
   ['activities/:slug', 'কার্যক্রমের বিস্তারিত'],
@@ -24,7 +25,7 @@ const publicRoutes = [
   ['privacy-policy', 'Privacy Policy'],
 ]
 const adminRoutes = [
-  ['members/:id', 'সদস্যের বিস্তারিত'], ['membership-applications', 'সদস্যপদ আবেদন'], ['activities', 'কার্যক্রম ব্যবস্থাপনা'],
+  ['membership-applications', 'সদস্যপদ আবেদন'], ['activities', 'কার্যক্রম ব্যবস্থাপনা'],
   ['news', 'সংবাদ ও নোটিশ ব্যবস্থাপনা'], ['gallery', 'গ্যালারি ব্যবস্থাপনা'], ['committee', 'কমিটি ব্যবস্থাপনা'],
   ['finance', 'অর্থ ও সহযোগিতা'], ['documents', 'ডকুমেন্টস'], ['roles-permissions', 'Admin & Permissions'], ['settings', 'Settings'],
 ]
@@ -36,7 +37,7 @@ export default function AppRoutes() {
       <Route path="admin/login" element={<AdminLoginPage/>}/>
       {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
     </Route>
-    <Route element={<ProtectedAdminRoute/>}><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/><Route path="dashboard" element={<DashboardPage/>}/><Route path="members" element={<MembersPage/>}/><Route path="members/inactive" element={<MembersPage/>}/>{adminRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route></Route>
+    <Route element={<ProtectedAdminRoute/>}><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/><Route path="dashboard" element={<DashboardPage/>}/><Route path="members" element={<MembersPage/>}/><Route path="members/inactive" element={<MembersPage/>}/><Route path="members/:id" element={<MemberDetailsPage/>}/>{adminRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route></Route>
     <Route path="*" element={<NotFoundPage/>}/>
   </Routes></>
 }
