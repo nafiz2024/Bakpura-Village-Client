@@ -5,6 +5,7 @@ export const newsService={
   getImportant:signal=>get('/news/important',{signal}),
   getPinned:signal=>get('/news/pinned',{signal}),
   getFeatured:signal=>get('/news/featured',{signal}),
+  getNewsItem:(slug,signal)=>get(`/news/${encodeURIComponent(slug)}`,{signal}),
 }
 export const newsPayload=value=>value?.data??value??{}
 export const newsItems=value=>{const data=newsPayload(value);if(Array.isArray(data))return data;return data.items??data.results??data.docs??data.news??[]}

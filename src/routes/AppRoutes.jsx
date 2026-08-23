@@ -10,6 +10,7 @@ import ActivitiesPage from '../pages/public/ActivitiesPage'
 import ActivityDetailsPage from '../pages/public/ActivityDetailsPage'
 import CommitteePage from '../pages/public/CommitteePage'
 import NewsPage from '../pages/public/NewsPage'
+import NewsDetailsPage from '../pages/public/NewsDetailsPage'
 import GalleryPage from '../pages/public/GalleryPage'
 import MembershipPage from '../pages/public/MembershipPage'
 import DonationPage from '../pages/public/DonationPage'
@@ -25,7 +26,6 @@ import DocumentsPage from '../pages/admin/DocumentsPage'
 import RolesPermissionsPage from '../pages/admin/RolesPermissionsPage'
 
 const publicRoutes = [
-  ['news/:slug', 'সংবাদ/নোটিশের বিস্তারিত'],
   ['privacy-policy', 'Privacy Policy'],
 ]
 const adminRoutes = [
@@ -37,7 +37,7 @@ const adminRoutes = [
 export default function AppRoutes() {
   return <><ScrollToTop/><Routes>
     <Route element={<PublicLayout/>}>
-      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="activities/:slug" element={<ActivityDetailsPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/><Route path="contact" element={<ContactPage/>}/>
+      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="activities/:slug" element={<ActivityDetailsPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="news/:slug" element={<NewsDetailsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/><Route path="contact" element={<ContactPage/>}/>
       <Route path="admin/login" element={<AdminLoginPage/>}/>
       {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
     </Route>
