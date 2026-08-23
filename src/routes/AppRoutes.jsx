@@ -13,6 +13,8 @@ import GalleryPage from '../pages/public/GalleryPage'
 import MembershipPage from '../pages/public/MembershipPage'
 import DonationPage from '../pages/public/DonationPage'
 import ContactPage from '../pages/public/ContactPage'
+import AdminLoginPage from '../pages/public/AdminLoginPage'
+import ProtectedAdminRoute from '../components/auth/ProtectedAdminRoute'
 
 const publicRoutes = [
   ['activities/:slug', 'কার্যক্রমের বিস্তারিত'],
@@ -30,10 +32,10 @@ export default function AppRoutes() {
   return <><ScrollToTop/><Routes>
     <Route element={<PublicLayout/>}>
       <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/><Route path="contact" element={<ContactPage/>}/>
+      <Route path="admin/login" element={<AdminLoginPage/>}/>
       {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
     </Route>
-    <Route path="/admin/login" element={<PagePlaceholder title="Admin Login — পরবর্তী ধাপে তৈরি হবে"/>}/>
-    <Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/>{adminRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route>
+    <Route element={<ProtectedAdminRoute/>}><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/>{adminRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route></Route>
     <Route path="*" element={<NotFoundPage/>}/>
   </Routes></>
 }

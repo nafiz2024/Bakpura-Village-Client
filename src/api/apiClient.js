@@ -7,4 +7,14 @@ const apiClient = axios.create({
   timeout: 15000,
 })
 
+let unauthorizedHandler=null
+export const setAdminUnauthorizedHandler=(handler)=>{unauthorizedHandler=handler}
+apiClient.interceptors.response.use(response=>response,error=>{
+  const url=error.config?.url||''
+  const isAdminRequest=url.startsWith('/admin/')
+  const isAuthProbe=url==='/admin/auth/me'||url==='/admin/auth/login'
+  if(error.response?.status===401&&isAdminRequest&&!isAuthProbe)unauthorizedHandler?.()
+  return Promise.reject(error)
+})
+
 export default apiClient
