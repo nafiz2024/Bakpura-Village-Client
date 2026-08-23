@@ -1,0 +1,25 @@
+import { useEffect, useState } from 'react'
+import { BreakdownCard, DashboardHeader, KeyStats, WelcomeCard } from '../../components/admin/dashboard/DashboardCards'
+import { AccountAndSystem, AuditActivity, FinanceOverview, QuickActions, RecentMembers } from '../../components/admin/dashboard/DashboardDetails'
+import { organizationName } from '../../constants/navigation'
+import { useAuth } from '../../context/auth-context'
+import { dashboardPayload, dashboardService } from '../../services/dashboardService'
+import '../../styles/admin-dashboard.css'
+
+const loading=()=>({status:'loading',data:null})
+const definitions={members:['members.view',dashboardService.memberStats],recentMembers:['members.view',dashboardService.recentMembers],applications:['applications.view',dashboardService.applicationStats],activities:['activities.view',dashboardService.activityStats],news:['news.view',dashboardService.newsStats],gallery:['gallery.view',dashboardService.galleryStats],finance:['finance.view',dashboardService.financeStats],financeSummary:['finance.view',dashboardService.financeSummary],documents:['documents.view',dashboardService.documentStats],contact:['contact.view',dashboardService.contactStats],audit:['audit.view',dashboardService.auditStats],recentAudit:['audit.view',dashboardService.recentAudit]}
+const initialSources=Object.fromEntries(['health','branding',...Object.keys(definitions)].map(key=>[key,loading()]))
+const applicationItems=[['pending','অপেক্ষমাণ'],['underReview','পর্যালোচনাধীন'],['moreInfoRequired','আরও তথ্য প্রয়োজন'],['approved','অনুমোদিত'],['rejected','প্রত্যাখ্যাত']]
+const memberItems=[['total','মোট'],['active','সক্রিয়'],['inactive','নিষ্ক্রিয়'],['archived','আর্কাইভ'],['expatriate','প্রবাসী']]
+const activityItems=[['total','মোট'],['published','প্রকাশিত'],['draft','খসড়া'],['unpublished','অপ্রকাশিত'],['featured','নির্বাচিত']]
+const newsItems=[['published','প্রকাশিত'],['draft','খসড়া'],['news','সংবাদ'],['notices','নোটিশ'],['important','গুরুত্বপূর্ণ'],['pinned','পিন করা']]
+const documentItems=[['total','মোট'],['draft','খসড়া'],['pendingApproval','অনুমোদনের অপেক্ষায়'],['published','প্রকাশিত'],['restricted','সীমিত']]
+const contactItems=[['new','নতুন'],['inProgress','চলমান'],['urgent','জরুরি'],['resolved','সমাধান']]
+
+export default function DashboardPage(){
+  const {admin,permissions}=useAuth(),permissionKey=permissions.join('|'),permissionSet=new Set(permissions),can=value=>permissionSet.has(value)
+  const [sources,setSources]=useState(initialSources),[refresh,setRefresh]=useState(0)
+  useEffect(()=>{let current=true;const allowed=new Set(permissionKey?permissionKey.split('|'):[]),permitted=Object.entries(definitions).filter(([,value])=>allowed.has(value[0])),jobs=[['health',dashboardService.health],['branding',dashboardService.branding],...permitted.map(([key,value])=>[key,value[1]])];Promise.allSettled(jobs.map(([,request])=>request())).then(results=>{if(!current)return;setSources(old=>({...old,...Object.fromEntries(results.map((result,index)=>[jobs[index][0],result.status==='fulfilled'?{status:'ready',data:dashboardPayload(result.value)}:{status:'error',data:null}]))}))});return()=>{current=false}},[permissionKey,refresh])
+  const source=key=>sources[key]||{status:'hidden',data:null}
+  return <div className="dashboard-page"><DashboardHeader admin={admin}/><WelcomeCard admin={admin} branding={source('branding').data}/><KeyStats sources={sources} can={can}/><div className="dashboard-main-grid">{can('applications.view')&&<BreakdownCard title="সদস্যপদ আবেদন" source={source('applications')} items={applicationItems} to="/admin/membership-applications" linkLabel="আবেদন দেখুন"/>}{can('members.view')&&<BreakdownCard title="সদস্য সারসংক্ষেপ" source={source('members')} items={memberItems} to="/admin/members"/>}{can('members.view')&&<RecentMembers source={source('recentMembers')}/>} {can('activities.view')&&<BreakdownCard title="কার্যক্রম" source={source('activities')} items={activityItems} to="/admin/activities"/>}{can('news.view')&&<BreakdownCard title="সংবাদ ও নোটিশ" source={source('news')} items={newsItems} to="/admin/news"/>}{can('documents.view')&&<BreakdownCard title="ডকুমেন্ট" source={source('documents')} items={documentItems} to="/admin/documents"/>}{can('contact.view')&&<BreakdownCard title="যোগাযোগ ও অপেক্ষমাণ কাজ" source={source('contact')} items={contactItems}/>}</div>{can('finance.view')&&<FinanceOverview stats={source('finance')} summary={source('financeSummary')}/>}<div className="dashboard-bottom-grid"><QuickActions permissions={permissionSet}/>{can('audit.view')&&<AuditActivity source={source('recentAudit')}/>}<AccountAndSystem admin={admin} health={source('health')}/></div>{Object.values(sources).some(item=>item.status==='error')&&<div className="dashboard-retry"><p>কিছু তথ্য লোড করা যায়নি। অন্য তথ্যগুলো স্বাভাবিকভাবে দেখানো হচ্ছে।</p><button className="button button--outline" onClick={()=>setRefresh(x=>x+1)}>আবার চেষ্টা করুন</button></div>}<footer className="admin-footer">© {new Date().getFullYear()} {organizationName}</footer></div>
+}
