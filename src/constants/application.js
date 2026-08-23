@@ -1,0 +1,1 @@
+export const applicationStatusLabels={pending:'অপেক্ষমাণ','under-review':'পর্যালোচনায়','more-info-required':'অতিরিক্ত তথ্য প্রয়োজন',approved:'অনুমোদিত',rejected:'প্রত্যাখ্যাত',archived:'আর্কাইভকৃত'}
