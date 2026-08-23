@@ -1,0 +1,5 @@
+import { ArrowRight, Quote } from 'lucide-react'
+import { Link } from 'react-router-dom'
+
+export function InspirationalMessage({ slogan }) { return <section className="about-quote"><div className="container"><Quote aria-hidden="true"/><blockquote>“{slogan || 'মানবতার সেবায়, সমাজের কল্যাণে'}”</blockquote><p>একটি সংগঠন, হাজারো আশা, গড়বো উন্নত সমাজের ভাষা</p></div></section> }
+export function AboutCTA({ membership, donation }) { const memberEnabled=membership?.applicationsEnabled!==false, donationEnabled=donation?.enabled!==false; return <section className="about-section"><div className="container about-cta"><div><p className="about-eyebrow">সম্মিলিত কল্যাণের পথে</p><h2>আপনিও আমাদের সাথে যুক্ত হোন</h2><p>মানবিক ও সামাজিক উদ্যোগে অংশগ্রহণ, সহযোগিতা কিংবা যোগাযোগের মাধ্যমে পাশে থাকুন।</p></div><div>{memberEnabled && <Link className="button button--primary home-button" to="/membership">সদস্য হোন <ArrowRight size={17}/></Link>}{donationEnabled && <Link className="button button--gold home-button" to="/donation">সহযোগিতা করুন</Link>}<Link className="button button--outline home-button" to="/contact">যোগাযোগ করুন</Link></div></div></section> }
