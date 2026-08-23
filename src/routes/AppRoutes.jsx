@@ -1,47 +1,52 @@
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import PagePlaceholder from '../components/common/PagePlaceholder'
+import PageLoader from '../components/common/PageLoader'
 import ScrollToTop from '../components/common/ScrollToTop'
+import ProtectedAdminRoute from '../components/auth/ProtectedAdminRoute'
 import AdminLayout from '../layouts/AdminLayout'
 import PublicLayout from '../layouts/PublicLayout'
-import NotFoundPage from '../pages/NotFoundPage'
-import HomePage from '../pages/public/HomePage'
-import AboutPage from '../pages/public/AboutPage'
-import ActivitiesPage from '../pages/public/ActivitiesPage'
-import ActivityDetailsPage from '../pages/public/ActivityDetailsPage'
-import CommitteePage from '../pages/public/CommitteePage'
-import NewsPage from '../pages/public/NewsPage'
-import NewsDetailsPage from '../pages/public/NewsDetailsPage'
-import PrivacyPolicyPage from '../pages/public/PrivacyPolicyPage'
-import GalleryPage from '../pages/public/GalleryPage'
-import MembershipPage from '../pages/public/MembershipPage'
-import DonationPage from '../pages/public/DonationPage'
-import ContactPage from '../pages/public/ContactPage'
-import AdminLoginPage from '../pages/public/AdminLoginPage'
-import ProtectedAdminRoute from '../components/auth/ProtectedAdminRoute'
-import DashboardPage from '../pages/admin/DashboardPage'
-import MembersPage from '../pages/admin/MembersPage'
-import MemberDetailsPage from '../pages/admin/MemberDetailsPage'
-import MembershipApplicationsPage from '../pages/admin/MembershipApplicationsPage'
-import FinancePage from '../pages/admin/FinancePage'
-import DocumentsPage from '../pages/admin/DocumentsPage'
-import RolesPermissionsPage from '../pages/admin/RolesPermissionsPage'
-import SettingsPage from '../pages/admin/SettingsPage'
 
-const publicRoutes = [
-]
-const adminRoutes = [
-  ['activities', 'কার্যক্রম ব্যবস্থাপনা'],
-  ['news', 'সংবাদ ও নোটিশ ব্যবস্থাপনা'], ['gallery', 'গ্যালারি ব্যবস্থাপনা'], ['committee', 'কমিটি ব্যবস্থাপনা'],
-]
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage'))
+const HomePage = lazy(() => import('../pages/public/HomePage'))
+const AboutPage = lazy(() => import('../pages/public/AboutPage'))
+const ActivitiesPage = lazy(() => import('../pages/public/ActivitiesPage'))
+const ActivityDetailsPage = lazy(() => import('../pages/public/ActivityDetailsPage'))
+const CommitteePage = lazy(() => import('../pages/public/CommitteePage'))
+const NewsPage = lazy(() => import('../pages/public/NewsPage'))
+const NewsDetailsPage = lazy(() => import('../pages/public/NewsDetailsPage'))
+const GalleryPage = lazy(() => import('../pages/public/GalleryPage'))
+const MembershipPage = lazy(() => import('../pages/public/MembershipPage'))
+const DonationPage = lazy(() => import('../pages/public/DonationPage'))
+const ContactPage = lazy(() => import('../pages/public/ContactPage'))
+const PrivacyPolicyPage = lazy(() => import('../pages/public/PrivacyPolicyPage'))
+const AdminLoginPage = lazy(() => import('../pages/public/AdminLoginPage'))
+const DashboardPage = lazy(() => import('../pages/admin/DashboardPage'))
+const MembersPage = lazy(() => import('../pages/admin/MembersPage'))
+const MemberDetailsPage = lazy(() => import('../pages/admin/MemberDetailsPage'))
+const MembershipApplicationsPage = lazy(() => import('../pages/admin/MembershipApplicationsPage'))
+const FinancePage = lazy(() => import('../pages/admin/FinancePage'))
+const DocumentsPage = lazy(() => import('../pages/admin/DocumentsPage'))
+const RolesPermissionsPage = lazy(() => import('../pages/admin/RolesPermissionsPage'))
+const SettingsPage = lazy(() => import('../pages/admin/SettingsPage'))
 
 export default function AppRoutes() {
-  return <><ScrollToTop/><Routes>
+  return <Suspense fallback={<PageLoader label="পেজ লোড হচ্ছে…"/>}><ScrollToTop/><Routes>
     <Route element={<PublicLayout/>}>
-      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="activities/:slug" element={<ActivityDetailsPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="news/:slug" element={<NewsDetailsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/><Route path="contact" element={<ContactPage/>}/><Route path="privacy-policy" element={<PrivacyPolicyPage/>}/>
-      <Route path="admin/login" element={<AdminLoginPage/>}/>
-      {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
+      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/>
+      <Route path="activities" element={<ActivitiesPage/>}/><Route path="activities/:slug" element={<ActivityDetailsPage/>}/>
+      <Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="news/:slug" element={<NewsDetailsPage/>}/>
+      <Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/><Route path="donation" element={<DonationPage/>}/>
+      <Route path="contact" element={<ContactPage/>}/><Route path="privacy-policy" element={<PrivacyPolicyPage/>}/><Route path="admin/login" element={<AdminLoginPage/>}/>
     </Route>
-    <Route element={<ProtectedAdminRoute/>}><Route path="/admin" element={<AdminLayout/>}><Route index element={<Navigate to="dashboard" replace/>}/><Route path="dashboard" element={<DashboardPage/>}/><Route path="members" element={<MembersPage/>}/><Route path="members/inactive" element={<MembersPage/>}/><Route path="members/:id" element={<MemberDetailsPage/>}/><Route path="membership-applications" element={<MembershipApplicationsPage/>}/><Route path="finance" element={<FinancePage/>}/><Route path="documents" element={<DocumentsPage/>}/><Route path="roles-permissions" element={<RolesPermissionsPage/>}/><Route path="settings" element={<SettingsPage/>}/>{adminRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}</Route></Route>
+    <Route element={<ProtectedAdminRoute/>}><Route path="/admin" element={<AdminLayout/>}>
+      <Route index element={<Navigate to="dashboard" replace/>}/><Route path="dashboard" element={<DashboardPage/>}/>
+      <Route path="members" element={<MembersPage/>}/><Route path="members/inactive" element={<MembersPage/>}/><Route path="members/:id" element={<MemberDetailsPage/>}/>
+      <Route path="membership-applications" element={<MembershipApplicationsPage/>}/><Route path="finance" element={<FinancePage/>}/>
+      <Route path="documents" element={<DocumentsPage/>}/><Route path="roles-permissions" element={<RolesPermissionsPage/>}/><Route path="settings" element={<SettingsPage/>}/>
+      <Route path="activities" element={<Navigate to="/activities" replace/>}/><Route path="news" element={<Navigate to="/news" replace/>}/>
+      <Route path="gallery" element={<Navigate to="/gallery" replace/>}/><Route path="committee" element={<Navigate to="/committee" replace/>}/>
+      <Route path="*" element={<NotFoundPage/>}/>
+    </Route></Route>
     <Route path="*" element={<NotFoundPage/>}/>
-  </Routes></>
+  </Routes></Suspense>
 }

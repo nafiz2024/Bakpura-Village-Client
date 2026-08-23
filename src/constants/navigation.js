@@ -1,4 +1,4 @@
-import { Activity, BellRing, BookOpen, CircleDollarSign, FileText, Gauge, Images, Settings, ShieldCheck, UserRoundCheck, UsersRound } from 'lucide-react'
+import { CircleDollarSign, FileText, Gauge, Settings, ShieldCheck, UserRoundCheck, UsersRound } from 'lucide-react'
 
 export const organizationName = 'বাকপুরা প্রবাসী ও যুব কল্যাণ সংগঠন'
 
@@ -15,12 +15,8 @@ export const adminNavigation = [
     { label: 'সকল সদস্য', to: '/admin/members' }, { label: 'নিষ্ক্রিয় সদস্য', to: '/admin/members/inactive' },
   ], permission: 'members.view'},
   { label: 'সদস্যপদ আবেদন', to: '/admin/membership-applications', icon: UserRoundCheck, permission: 'applications.view' },
-  { label: 'কার্যক্রম', to: '/admin/activities', icon: Activity, permission: 'activities.view' },
-  { label: 'সংবাদ ও নোটিশ', to: '/admin/news', icon: BellRing, permission: 'news.view' },
-  { label: 'গ্যালারি', to: '/admin/gallery', icon: Images, permission: 'gallery.view' },
   { label: 'অর্থ ও সহযোগিতা', to: '/admin/finance', icon: CircleDollarSign, permission: 'finance.view' },
   { label: 'ডকুমেন্টস', to: '/admin/documents', icon: FileText, permission: 'documents.view' },
-  { label: 'কমিটি', to: '/admin/committee', icon: BookOpen, permission: 'committee.view' },
   { label: 'Admin & Permissions', to: '/admin/roles-permissions', icon: ShieldCheck, permissions: ['roles.view','admins.view'] },
   { label: 'Settings', to: '/admin/settings', icon: Settings, permission: 'settings.view' },
 ]
