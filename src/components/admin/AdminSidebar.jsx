@@ -1,6 +1,11 @@
-import { ChevronDown, LogOut, X } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { adminNavigation } from '../../constants/navigation'
-import { useAuth } from '../../context/auth-context'
+import {ChevronDown,LogOut,X} from 'lucide-react'
+import {NavLink,useNavigate} from 'react-router-dom'
+import {adminNavigation} from '../../constants/navigation'
+import {useAuth} from '../../context/auth-context'
 
-export default function AdminSidebar({open,onClose}){const {hasPermission,logout}=useAuth(),navigate=useNavigate(),items=adminNavigation.filter(item=>!item.permission||hasPermission(item.permission));const signOut=async()=>{await logout();onClose();navigate('/admin/login',{replace:true})};return <><button className={`sidebar-backdrop ${open?'is-open':''}`} onClick={onClose} aria-label="সাইডবার বন্ধ করুন"/><aside className={`admin-sidebar ${open?'is-open':''}`} aria-label="অ্যাডমিন নেভিগেশন"><div className="sidebar-mobile-title"><strong>মেনু</strong><button type="button" onClick={onClose} aria-label="সাইডবার বন্ধ করুন"><X/></button></div><nav>{items.map(item=>item.children?<details key={item.label} open><summary><item.icon size={19}/><span>{item.label}</span><ChevronDown className="chevron" size={16}/></summary><div className="submenu">{item.children.map(child=><NavLink key={child.to} to={child.to} onClick={onClose}>{child.label}</NavLink>)}</div></details>:<NavLink key={item.to} to={item.to} onClick={onClose}><item.icon size={19}/><span>{item.label}</span></NavLink>)}</nav><button className="logout-placeholder" type="button" onClick={signOut}><LogOut size={19}/> লগআউট</button></aside></>}
+export default function AdminSidebar({open,onClose}){
+  const {hasPermission,logout}=useAuth(),navigate=useNavigate()
+  const items=adminNavigation.filter(item=>(!item.permission||hasPermission(item.permission))&&(!item.permissions||item.permissions.some(hasPermission)))
+  const signOut=async()=>{await logout();onClose();navigate('/admin/login',{replace:true})}
+  return <><button className={`sidebar-backdrop ${open?'is-open':''}`} onClick={onClose} aria-label="সাইডবার বন্ধ করুন"/><aside className={`admin-sidebar ${open?'is-open':''}`} aria-label="অ্যাডমিন নেভিগেশন"><div className="sidebar-mobile-title"><strong>মেনু</strong><button type="button" onClick={onClose} aria-label="সাইডবার বন্ধ করুন"><X/></button></div><nav>{items.map(item=>item.children?<details key={item.label} open><summary><item.icon size={19}/><span>{item.label}</span><ChevronDown className="chevron" size={16}/></summary><div className="submenu">{item.children.map(child=><NavLink key={child.to} to={child.to} onClick={onClose}>{child.label}</NavLink>)}</div></details>:<NavLink key={item.to} to={item.to} onClick={onClose}><item.icon size={19}/><span>{item.label}</span></NavLink>)}</nav><button className="logout-placeholder" type="button" onClick={signOut}><LogOut size={19}/> লগআউট</button></aside></>
+}

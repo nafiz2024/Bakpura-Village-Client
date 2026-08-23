@@ -1,0 +1,5 @@
+export const roleFallback={'super-admin':'Super Admin','management-admin':'Management Admin','finance-admin':'Finance Admin','content-admin':'Content Admin'}
+export const adminStatuses={active:'সক্রিয়',disabled:'নিষ্ক্রিয়'}
+export const moduleLabels={members:'সদস্য',applications:'সদস্যপদ আবেদন',activities:'কার্যক্রম',news:'সংবাদ',gallery:'গ্যালারি',contact:'যোগাযোগ',finance:'অর্থ',documents:'ডকুমেন্ট',committee:'কমিটি',admins:'অ্যাডমিন',roles:'ভূমিকা',settings:'সেটিংস',audit:'অডিট'}
+export const actionLabels={view:'দেখুন',create:'তৈরি করুন',edit:'সম্পাদনা করুন',archive:'আর্কাইভ করুন',delete:'মুছুন',export:'এক্সপোর্ট করুন',review:'পর্যালোচনা করুন',approve:'অনুমোদন করুন',reject:'প্রত্যাখ্যান করুন',publish:'প্রকাশ করুন',upload:'যোগ করুন',manage:'পরিচালনা করুন',disable:'নিষ্ক্রিয় করুন',download:'ডাউনলোড করুন',changeAccess:'প্রবেশাধিকার পরিবর্তন',void:'বাতিল করুন'}
+export const permissionLabel=value=>{const [module,action]=value.split('.');return `${moduleLabels[module]||module}: ${actionLabels[action]||action}`}

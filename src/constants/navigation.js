@@ -21,6 +21,6 @@ export const adminNavigation = [
   { label: 'অর্থ ও সহযোগিতা', to: '/admin/finance', icon: CircleDollarSign, permission: 'finance.view' },
   { label: 'ডকুমেন্টস', to: '/admin/documents', icon: FileText, permission: 'documents.view' },
   { label: 'কমিটি', to: '/admin/committee', icon: BookOpen, permission: 'committee.view' },
-  { label: 'Admin & Permissions', to: '/admin/roles-permissions', icon: ShieldCheck, permission: 'roles.view' },
+  { label: 'Admin & Permissions', to: '/admin/roles-permissions', icon: ShieldCheck, permissions: ['roles.view','admins.view'] },
   { label: 'Settings', to: '/admin/settings', icon: Settings, permission: 'settings.view' },
 ]
