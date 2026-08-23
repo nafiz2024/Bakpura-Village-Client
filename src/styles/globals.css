@@ -10,3 +10,10 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .brand-logo,.official-logo,.admin-brand-logo{display:block;width:54px;height:54px;flex:0 0 auto;object-fit:contain}.official-logo--compact,.admin-brand-logo{width:44px;height:44px}.footer-logo{display:block;width:76px;height:76px;margin-bottom:.8rem;object-fit:contain}
 .footer-bottom span{color:#aebfd0;font-size:.84rem}.admin-footer::after{content:' · Developed by Nafiz Alam';color:#78889a;font-size:.82rem}
+
+/* Shared geometry for public listing-page heroes using the official wide banner. */
+.site-shell :is(.about-hero-grid,.activities-hero-grid,.committee-hero-grid,.news-hero-grid,.gallery-hero-grid,.membership-hero-grid,.donation-hero-grid,.contact-hero-grid){grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:clamp(1.5rem,3vw,3rem)}
+.site-shell :is(.about-hero-grid,.activities-hero-grid,.committee-hero-grid,.news-hero-grid,.gallery-hero-grid,.membership-hero-grid,.donation-hero-grid,.contact-hero-grid)>div{min-width:0}
+.site-shell .about-hero-image-wrap{width:100%;min-height:0;overflow:hidden;padding:0;border-width:1px}
+.site-shell :is(.about-hero-image,.activities-hero-image,.committee-hero-image,.news-hero-image,.gallery-hero-image,.membership-hero-image,.donation-hero-image),.site-shell .contact-hero img{display:block;width:100%;height:auto;min-height:0;border-width:1px;object-fit:contain;background:transparent}
+@media(max-width:900px){.site-shell :is(.about-hero-grid,.activities-hero-grid,.committee-hero-grid,.news-hero-grid,.gallery-hero-grid,.membership-hero-grid,.donation-hero-grid,.contact-hero-grid){grid-template-columns:1fr}.site-shell .about-hero-image-wrap{min-height:0}.site-shell :is(.about-hero-image,.activities-hero-image,.committee-hero-image,.news-hero-image,.gallery-hero-image,.membership-hero-image,.donation-hero-image),.site-shell .contact-hero img{height:auto;min-height:0}}
