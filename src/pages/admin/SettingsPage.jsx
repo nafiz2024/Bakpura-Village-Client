@@ -23,7 +23,7 @@ const configs={
   legal:[['privacyPolicyEnabled','গোপনীয়তা নীতি সক্রিয়','boolean'],['privacyContactEmail','গোপনীয়তা যোগাযোগের ইমেইল','email']],
 }
 const clone=value=>JSON.parse(JSON.stringify(value??{}))
-const safeImage=value=>{try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.href:''}catch{return ''}}
+const safeImage=value=>{if(['/branding/bakpura-official-logo.png','/branding/bakpura-official-banner.png'].includes(value))return value;try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.href:''}catch{return ''}}
 const canManageSection=(role,section)=>['super-admin','management-admin'].includes(role)||(role==='finance-admin'&&section==='donation')||(role==='content-admin'&&['news','activities','gallery','homepage','announcement'].includes(section))
 const errorText=error=>error.response?.status===403?'এই সেটিংস পরিবর্তনের অনুমতি আপনার নেই।':error.response?.status===400?(error.response?.data?.message||'প্রদত্ত তথ্য সঠিক নয়।'):'সেটিংস সংরক্ষণ করা যায়নি।'
 

@@ -1,8 +1,13 @@
 import apiClient from '../api/apiClient'
 
 const get = async (url) => (await apiClient.get(url)).data
+let publicSettingsRequest
+const settings = () => {
+  if (!publicSettingsRequest) publicSettingsRequest = get('/settings/public').catch(error => { publicSettingsRequest = null; throw error })
+  return publicSettingsRequest
+}
 export const homeService = {
-  settings: () => get('/settings/public'),
+  settings,
   activities: () => get('/activities/featured'),
   importantNews: () => get('/news/important'),
   news: () => get('/news/featured'),
