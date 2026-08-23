@@ -10,10 +10,11 @@ import ActivitiesPage from '../pages/public/ActivitiesPage'
 import CommitteePage from '../pages/public/CommitteePage'
 import NewsPage from '../pages/public/NewsPage'
 import GalleryPage from '../pages/public/GalleryPage'
+import MembershipPage from '../pages/public/MembershipPage'
 
 const publicRoutes = [
   ['activities/:slug', 'কার্যক্রমের বিস্তারিত'],
-  ['news/:slug', 'সংবাদ/নোটিশের বিস্তারিত'], ['membership', 'সদস্য হোন'],
+  ['news/:slug', 'সংবাদ/নোটিশের বিস্তারিত'],
   ['donation', 'সহযোগিতা করুন'], ['contact', 'যোগাযোগ'], ['privacy-policy', 'Privacy Policy'],
 ]
 const adminRoutes = [
@@ -26,7 +27,7 @@ const adminRoutes = [
 export default function AppRoutes() {
   return <><ScrollToTop/><Routes>
     <Route element={<PublicLayout/>}>
-      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/>
+      <Route index element={<HomePage/>}/><Route path="about" element={<AboutPage/>}/><Route path="activities" element={<ActivitiesPage/>}/><Route path="committee" element={<CommitteePage/>}/><Route path="news" element={<NewsPage/>}/><Route path="gallery" element={<GalleryPage/>}/><Route path="membership" element={<MembershipPage/>}/>
       {publicRoutes.map(([path,title])=><Route key={path} path={path} element={<PagePlaceholder title={title}/>}/>)}
     </Route>
     <Route path="/admin/login" element={<PagePlaceholder title="Admin Login — পরবর্তী ধাপে তৈরি হবে"/>}/>
